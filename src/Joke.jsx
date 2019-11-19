@@ -7,31 +7,57 @@ import jokes from './jokes.json';
 import puns from './puns.json';
 
 const Joke = () => {
-    const [count, setCount] = useState(0);
-    const [punCount, setPunCount] = useState(0);
-    const [isPunSet, setIsPunSet] = useState(false);
+    const [punSet, setPunSet] = useState({
+        count: 0,
+        icon: faSmileWink,
+        iconClassName: 'smile-wink',
+        name: 'puns',
+        enabled: false
+    });
+
+    const [jokeSet, setJokeSet] = useState({
+        count: 0,
+        icon: faGrinBeamSweat,
+        iconClassName: 'grin',
+        name: 'jokes',
+        enabled: true
+    });
 
     const next = () => {
-        if (isPunSet) {
-            punCount === puns.length - 1
-            ? setPunCount(0)
-            : setPunCount(punCount + 1)
+        switch(true) {
+            case jokeSet.enabled: {
+                jokeSet.count === jokes.length - 1
+                ? setJokeSet({ ...jokeSet, count: 0 })
+                : setJokeSet({ ...jokeSet, count: jokeSet.count + 1 });
+                break;
+            }
+            case punSet.enabled: {
+                punSet.count === puns.length - 1
+                ? setPunSet({ ...punSet, count: 0 })
+                : setPunSet({ ...punSet, count: punSet.count + 1 });
+                break;
+            }
+            default:
+                throw new Error();
         }
-        count === jokes.length - 1
-        ? setCount(0)
-        : setCount(count + 1)
+    };
+
+    const changeSet = () => {
+        setJokeSet({ ...jokeSet, enabled: !jokeSet.enabled });
+        setPunSet({ ...punSet, enabled: !punSet.enabled });
     };
 
     return (
         <div className="App">
           <header className="App-header">
-            { isPunSet ? <FontAwesomeIcon className="icon smile-wink" icon={faSmileWink} /> : <FontAwesomeIcon className="icon grin" icon={faGrinBeamSweat} />}
-            <p>
-              { isPunSet ? puns[punCount].value : jokes[count].value }
-            </p>
+              <FontAwesomeIcon
+                className={`icon ${jokeSet.enabled ? jokeSet.iconClassName : punSet.iconClassName}`}
+                icon={jokeSet.enabled ? jokeSet.icon : punSet.icon} />
+              <p>{jokeSet.enabled ? jokes[jokeSet.count].value : puns[punSet.count].value}</p>
+
             <div className="buttons">
-                <button className="action-button secondary-action" type="button" onClick={() => { setIsPunSet(!isPunSet) }}>
-                    Change set
+                <button className="action-button secondary-action" type="button" onClick={() => { changeSet() }}>
+                    Show me {jokeSet.enabled ? punSet.name : jokeSet.name }
                 </button>
                 <button className="action-button primary-action" type="button" onClick={() => { next() }}>
                     Next
