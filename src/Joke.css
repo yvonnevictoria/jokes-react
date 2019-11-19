@@ -1,0 +1,43 @@
+.action-button {
+    font-size: 16px;
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 32px 12px 32px;
+    display: block;
+    border: none;
+    margin-top: 20px;
+    min-width: 150px;
+}
+
+.primary-action {
+    background-color: #ff69a4;
+}
+
+.secondary-action {
+    background-color: #ff9748;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+button + button {
+    margin-left: 20px;
+}
+
+.icon {
+    font-size: 250px;
+}
+
+.icon.smile-wink {
+    color: #69CBB0;
+}
+
+.icon.grin {
+    color: #A491D3;
+}
+
+p {
+    max-width: 65%;
+}
